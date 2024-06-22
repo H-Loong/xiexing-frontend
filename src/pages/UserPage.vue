@@ -2,7 +2,14 @@
   <div style="padding-top: 5px"></div>
   <template v-if="user">
     <div class="center">
+      <van-uploader :after-read="afterRead"
+                    :max-count="1"
+                    :max-size="5000 * 1024"
+                    @oversize="onOversize">
+      <div>
       <img :alt="user?.username" class="img" :src="user?. avatarUrl?user. avatarUrl:'src/assets/default.png'">
+    </div>
+      </van-uploader>
     </div>
     <div style="padding-top: 15px"/>
     <van-cell title="当前用户" :value="user?.username" />
@@ -13,6 +20,7 @@
       <van-button type="default" size="large" icon-position="" is-link to="/user/login">切换账号</van-button>
       <van-button type="default" size="large" icon-position="" @click="logout">退出</van-button>
     </div>
+
   </template>
 </template>
 
@@ -20,27 +28,42 @@
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import myAxios from "../plugins/myAxios";
-import {Toast} from "vant";
+import {Toast,} from "vant";
 import {getCurrentUser} from "../services/user";
+import { Notify } from 'vant';
+
 
 const user = ref();
-
+const updateAvatarUrl = ref(false)
 const router = useRouter();
 
 onMounted(async () => {
   user.value = await getCurrentUser();
-})
 
-const toEdit = (editKey: string, editName: string, currentValue: string) => {
-  router.push({
-    path: '/user/edit',
-    query: {
-      editKey,
-      editName,
-      currentValue,
+  Notify({ type: 'primary', message: '点击头像可以更换头像' });
+})
+const afterRead = async (file: any) => {
+  updateAvatarUrl.value = true
+  if (updateAvatarUrl.value) {
+    const fileFile = file.file
+    const res = await myAxios.post("/user/upload", {
+      'file': fileFile,
+      id: user.value.id
+    }, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    })
+
+    if (res.data.code !== null){
+      Toast.success("更新成功！")
+    }else{
+      Toast.fail("更新失败！")
     }
-  })
+
+}}
+const onOversize = () => {
+  Toast.fail("头像上传大小不能超过500kb")
 }
+
 const logout = async () => {
   try {
     const response = await myAxios.post('/user/logout');
