@@ -12,7 +12,13 @@
     <van-cell title="电话" :value="user.phone"/>
     <van-cell title="邮箱" :value="user.email"/>
     <van-cell title="个人简介" :value="user.profile"/>
-    <van-cell title="标签" :value="user.tags.join(', ')"/>
+    <van-cell title="标签" is-link to="/update/tags">
+      <template #value>
+        <div class="tags-container">
+          <van-tag v-for="(tag, index) in user.tags" :key="index" plain type="primary">{{ tag }}</van-tag>
+        </div>
+      </template>
+    </van-cell>
     <van-cell title="注册时间" :value="user.createTime"/>
   </template>
   <template v-else>
@@ -80,5 +86,11 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px; /* 调整标签之间的间距 */
+  justify-content: flex-end; /* 使标签靠右显示 */
 }
 </style>

@@ -74,18 +74,15 @@ const doUpdateResult = async () => {
     Toast.fail('用户未登录');
     return;
   }
-
-
     const response = await myAxios.post('/user/updateTags', {
       userId: currentUser.id,
       tags: activeIds.value,
     });
-
-
     if (response.data.code === null) {
       Toast.fail('标签更新失败');
     } else {
       Toast.success('标签更新成功');
+      await router.push('/user/update')
     }
 
 };

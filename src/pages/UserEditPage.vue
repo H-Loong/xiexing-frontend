@@ -81,10 +81,12 @@ const onSubmit = async () => {
       [editUser.value.editKey as string]: submitValue,
     });
 
-    if (res.data.code === null) {
-      Toast.fail('更新失败');
-    } else {
+    if (res.code === 0 && res.data) {
+
       Toast.success('更新成功');
+      await router.push('/user/update')
+    } else {
+      Toast.fail('更新失败');
       router.back(); // 返回上一级页面
     }
   } catch (error) {

@@ -1,10 +1,8 @@
 <template>
   <div class="background-container">
-    <div class="overlay">
-      <van-notice-bar color="#1989fa" background="#ecf9ff" scrollable text="与君偕行——本系统致力于解决学科竞赛组队/日常找搭子等伙伴匹配场景！" />
-
-    </div>
-
+    <van-notice-bar color="#1989fa" background="#ecf9ff" scrollable text="与君偕行——本系统致力于解决学科竞赛组队/日常找搭子等伙伴匹配场景！" />
+    <img src="../assets/icon1.jpg" class="header-image" alt="Header Image" />
+    <p class="headline">偕行——寻找志同道合的伙伴</p>
     <div class="login-page">
 
       <van-form @submit="onSubmit">
@@ -12,25 +10,36 @@
           <van-field
               v-model="userAccount"
               name="userAccount"
+              required
               label="账号"
               placeholder="请输入账号"
-              :rules="[{ required: true, message: '请填写用户名' }]"
+              :rules="[{ pattern: /^[a-zA-Z0-9_]{4,}$/, message: '最少四位，只允许字母、数字和下划线' }]"
           />
           <van-field
               v-model="userPassword"
               type="password"
               name="userPassword"
+              required
               label="密码"
               placeholder="请输入密码"
-              :rules="[{ required: true, message: '请填写密码' }]"
+              :rules="[{ pattern: /^.{6,}$/, message: '密码至少6位' }]"
           />
           <van-field
               v-model="checkPassword"
               type="password"
               name="checkPassword"
+              required
               label="确认密码"
               placeholder="请再次输入密码"
-              :rules="[{ required: true, message: '请填写密码' }]"
+              :rules="[{ pattern: /^.{6,}$/, message: '密码至少6位' }]"
+          />
+          <van-field
+              v-model="email"
+              name="email"
+              required
+              label="QQ邮箱"
+              placeholder="请输入QQ邮箱"
+              :rules="[{ pattern: /^[1-9][0-9]{4,10}@qq\.com$/, message: '请输入有效的QQ邮箱地址'  }]"
           />
         </van-cell-group>
         <div style="margin: 16px;">
@@ -38,9 +47,14 @@
             提交
           </van-button>
         </div>
-        <a href="/user/login" class="login-link">已有账号？点击登录</a>
+        <div style="margin: 16px;">
+          <van-button round plain block type="primary" native-type="submit" @click="moveToLogin">
+            已有账号？去登录
+          </van-button>
+        </div>
+
       </van-form>
-      </div>
+    </div>
 
   </div>
 </template>
@@ -57,12 +71,19 @@ const route = useRoute();
 const userAccount = ref('');
 const userPassword = ref('');
 const checkPassword = ref('');
+const email = ref('');
 
+
+// 跳转到登录页
+const moveToLogin = () => {
+  router.push('/user/login')
+}
 const onSubmit = async () => {
   const res = await myAxios.post('/user/register', {
     userAccount: userAccount.value,
     userPassword: userPassword.value,
     checkPassword: checkPassword.value,
+    email: email.value,
   })
   console.log(res, '用户注册');
   if (res.code === 0 && res.data) {
@@ -71,7 +92,7 @@ const onSubmit = async () => {
     const redirectUrl = route.query?.redirect as string ?? '/user/login';
     window.location.href = redirectUrl;
   } else {
-    Toast.fail('注册失败');
+    Toast.fail(`注册失败: ${res.description}`);
   }
 };
 </script>
@@ -82,46 +103,38 @@ const onSubmit = async () => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-image: url('https://s2.loli.net/2024/05/19/fijC4xXgDEBq37Q.jpg'); /* 替换为实际的图片路径 */
-  background-size: cover;
-  background-position: center;
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(3, 0, 0, 0.6); /* 黑色背景，50% 透明 */
-  z-index: 1;
+.header-image {
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 1rem auto 0;
+}
+
+.headline {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 .login-page {
   position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  margin-top: 1.5rem;
 }
-
-.submit-button {
-  margin-top: 12px; /* 调整提交按钮距离上方的距离 */
-  width: 100%; /* 让按钮铺满容器的宽度 */
-}
-
 .login-link {
-  font-size: 14px; /* 调整注册链接的字体大小 */
-  display: block; /* 将链接变成块级元素 */
-  text-align: center; /* 文本居中显示 */
-  margin-top: 20px; /* 调整链接距离上方的距离 */
-  color: #007bff; /* 调整链接的颜色 */
-  text-decoration: none; /* 移除链接的下划线 */
+  font-size: 14px;
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
 }
 
-.register-link:hover {
-  text-decoration: underline; /* 鼠标悬停时显示下划线 */
+.login-link:hover {
+  text-decoration: underline;
 }
 </style>
