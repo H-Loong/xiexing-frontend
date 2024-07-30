@@ -115,7 +115,7 @@ const onSubmit = async () => {
       replace: true,
     });
   } else {
-    Toast.success('更新失败');
+    Toast.fail('更新失败');
   }
 }
 </script>

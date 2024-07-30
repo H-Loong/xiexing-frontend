@@ -12,7 +12,7 @@
     <van-cell title="电话" :value="user.phone"/>
     <van-cell title="邮箱" :value="user.email"/>
     <van-cell title="个人简介" :value="user.profile"/>
-    <van-cell title="标签" is-link to="/update/tags">
+    <van-cell title="标签" >
       <template #value>
         <div class="tags-container">
           <van-tag v-for="(tag, index) in user.tags" :key="index" plain type="primary">{{ tag }}</van-tag>

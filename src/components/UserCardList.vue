@@ -3,7 +3,7 @@
     <van-card
         :desc="user.profile ? '个人简介：' + user.profile : '个人简介：该用户比较懒，暂时没有设置'"
         :title="user.username ? user.username : '无名氏'"
-        :thumb="user.avatarUrl ? user.avatarUrl : 'https://s2.loli.net/2024/05/22/jJZvLgYKpSOmlHt.png'"
+        :thumb="user.avatarUrl ? user.avatarUrl : 'src/assets/default.png'"
     >
       <template #tags>
         <div v-if="user.tags && user.tags.length < 7" style="margin-bottom: 14px"></div>

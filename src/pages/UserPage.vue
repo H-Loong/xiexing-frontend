@@ -40,7 +40,7 @@ const router = useRouter();
 onMounted(async () => {
   user.value = await getCurrentUser();
 
-  Notify({ type: 'primary', message: '点击头像可以更换头像' });
+  Notify({ type: 'primary', message: '点击头像可以更换头像',  duration: 1500});
 })
 const afterRead = async (file: any) => {
   updateAvatarUrl.value = true

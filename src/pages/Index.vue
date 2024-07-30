@@ -5,8 +5,9 @@
     <div class="cell-content">
       <span class="title">智能匹配</span>
       <van-icon
-          name="question-o"
+          name="info-o"
           class="tooltip-icon"
+          size="15"
           @click="show = !show"
       />
       <van-popup v-model:show="show" position="top-right" :round="true" :overlay="true">
