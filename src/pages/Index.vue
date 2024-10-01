@@ -31,6 +31,7 @@
 <!--      force-ellipses-->
 <!--      @change="loadData"-->
 <!--  />-->
+
 </template>
 
 <script setup lang="ts">
@@ -39,6 +40,7 @@ import myAxios from "../plugins/myAxios";
 import { Toast } from "vant";
 import UserCardList from "../components/UserCardList.vue";
 import { UserType } from "../models/user";
+import Copyright from "../components/Copyright.vue";
 
 const isMatchMode = ref<boolean>(false);
 const userList = ref<UserType[]>([]);
@@ -66,12 +68,10 @@ const loadData = async () => {
           Toast.fail('请求失败');
         });
   } else {
-    userListData = await myAxios.get('/user/recommend', {
-      params: { pageSize: 20, pageNum: 1 }
-    })
+    userListData = await myAxios.get('/user/recommend')
         .then(response => {
           console.log('/user/recommend succeed', response);
-          return response?.data?.records;
+          return response?.data;
         })
         .catch(error => {
           console.error('/user/recommend error', error);

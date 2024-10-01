@@ -15,6 +15,7 @@ import TeamCardList from "../components/TeamCardList.vue";
 import { onMounted, ref } from "vue";
 import myAxios from "../plugins/myAxios";
 import { Toast } from "vant";
+import Copyright from "../components/Copyright.vue";
 
 const active = ref('public');
 const router = useRouter();

@@ -3,7 +3,7 @@
     <van-card
         :desc="user.profile ? '个人简介：' + user.profile : '个人简介：该用户比较懒，暂时没有设置'"
         :title="user.username ? user.username : '无名氏'"
-        :thumb="user.avatarUrl ? user.avatarUrl : 'src/assets/default.png'"
+        :thumb="user.avatarUrl ? user.avatarUrl : avatar"
     >
       <template #tags>
         <div v-if="user.tags && user.tags.length < 7" style="margin-bottom: 14px"></div>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { UserType } from '../models/user';
+import avatar from '../assets/avatar.png'
 
 interface UserCardListProps {
   loading: boolean;

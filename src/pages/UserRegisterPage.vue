@@ -55,7 +55,7 @@
 
       </van-form>
     </div>
-
+<Copyright/>
   </div>
 </template>
 
@@ -64,6 +64,7 @@ import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios";
 import {Toast} from "vant";
+import Copyright from "../components/Copyright.vue";
 
 const router = useRouter();
 const route = useRoute();

@@ -15,14 +15,17 @@
   <van-tabbar route @change="onChange">
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
     <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
+    <van-tabbar-item to="/chat" icon="chat-o" name="chat">消息</van-tabbar-item>
     <van-tabbar-item to="/user" icon="friends-o" name="user">个人</van-tabbar-item>
   </van-tabbar>
+  <Copyright/>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import {ref} from "vue";
 import routes from "../config/route";
+import Copyright from "../components/Copyright.vue";
 
 const router = useRouter();
 const DEFAULT_TITLE = '偕 行';

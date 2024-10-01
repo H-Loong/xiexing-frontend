@@ -24,6 +24,7 @@ import { getCurrentUser } from '../services/user';
 import { genderEnum } from '../constants/user';
 
 import type { UserType } from '../models/user';
+import Copyright from "../components/Copyright.vue";
 
 const user = ref<UserType | null>(null);
 

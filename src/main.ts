@@ -2,6 +2,7 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import * as VueRouter from 'vue-router';
 import routes from "./config/route";
+import store from '../src/store/index.js'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import '../global.css'
@@ -18,4 +19,5 @@ const router = VueRouter.createRouter({
 })
 
 app.use(router);
+app.use(store);
 app.mount('#app')
